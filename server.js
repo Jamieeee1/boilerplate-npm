@@ -58,10 +58,12 @@ app.use(function (err, req, res, next) {
   }
 });
 
-//Listen on port set in environment variable or default to 3000
-const listener = app.listen(process.env.PORT || 3002, function () {
-  console.log("Node.js listening on port " + listener.address().port);
-});
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  const listener = app.listen(process.env.PORT || 3002, function () {
+    console.log("Node.js listening on port " + listener.address().port);
+  });
+}
 
-// const port = process.env.PORT || 3002;
-// app.listen(port, () => console.log(`Server running on port ${port}`));
+// Export for Vercel
+module.exports = app;
